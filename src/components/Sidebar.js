@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Registrations() {
+function Sidebar() {
     return (
         <div>
             
@@ -8,4 +8,4 @@ function Registrations() {
     )
 }
 
-export default Registrations
+export default Sidebar;

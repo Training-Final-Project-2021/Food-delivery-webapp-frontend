@@ -1,11 +1,18 @@
-import React from 'react';
+import React from 'react'
+import Footer from './Footer'
+import Header from './Header'
+import Home from './Home'
+import Sidebar from './Sidebar'
 
-const Main = () => {
+function Main() {
     return (
         <div>
-
+            <Header />
+            <Sidebar />
+            <Home />
+            <Footer />
         </div>
     )
 }
 
-export default Main;
+export default Main
