@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { Nav, Navbar, NavbarBrand, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory} from 'react-router-dom';
+import axios from 'axios';
 
 function Header(props) { 
+        const history = useHistory();
         const [isNavOpen, setState]  = useState(false)
         const toggleNav = () => {
             setState(!isNavOpen)
           }
+
+        const handleClick = () => {
+            axios.delete('http://localhost:3030/v1/customers/sign_out', {headers: {"AUTH-TOKEN" :props.auth_token}})
+            .then(response => {
+              props.handleLogout()
+              history.push('/')
+            })
+            .catch(error => console.log(error))
+        }
+
         return(
             <div>
                 <Navbar className="bg-dark navbar-dark" expand="md" fixed="top">
@@ -25,16 +37,16 @@ function Header(props) {
                                     <NavLink className="nav-link" to='/signup'><span className="fa fa-user-plus fa-lg"></span> New User</NavLink>
                                 </NavItem>
                                 {
-                                    props.loggedInStatus ?
+                                    props.login_status ?
                                         <NavItem>
-                                            <NavLink className="nav-link"  to='/logout' onClick={this.handleClick} ><span className="fa fa-sign-out fa-lg"></span> Sign Out</NavLink>
+                                            <NavLink className="nav-link"  to='/' onClick={handleClick} ><span className="fa fa-sign-out fa-lg"></span> Sign Out</NavLink>
                                         </NavItem> : null
                                 }
                                 <NavItem>
                                     <NavLink className="nav-link" to='/hotels_list'><span className="fa fa-cutlery fa-lg"></span> Show Dishes</NavLink>
                                 </NavItem>
                                 {
-                                    props.loggedInStatus ?
+                                    props.login_status ?
                                         <NavItem>
                                             <NavLink className="nav-link" to="/profile"><i className="fa fa-lg fa-user-circle" aria-hidden="true"></i></NavLink>
                                         </NavItem> : null

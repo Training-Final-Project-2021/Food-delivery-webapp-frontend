@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link, useHistory} from "react-router-dom";
 import axios from 'axios';
-function HotelLogin(props) {
+function CustomerLogin(props) {
     const history = useHistory();
     const [state, setState] = useState({
         email: "",
@@ -21,18 +21,18 @@ function HotelLogin(props) {
     const handleSubmit = (event) => {
         event.preventDefault()
         const { email, password } = state
-        let hotel = {
+        let customer = {
           email: email,
           password: password
         }
     
-        axios.post('http://localhost:3030/v1/hotels/sign_in', { hotel })
+        axios.post('http://localhost:3030/v1/customers/sign_in', { customer })
           .then(response => {
             if (response.data.is_success) {
-                setState({...state, auth_token: response.data.hotel.authentication_token, messages: response.data.messages })
-                //console.log(response.data.hotel.authentication_token,", auth-token = ", state.auth_token)
+                setState({...state, auth_token: response.data.customer.authentication_token, messages: response.data.messages })
+                //console.log(response.data.customer.authentication_token,", auth-token = ", state.auth_token)
               props.handleLogin(response.data)
-              history.push('/hotels/dashboard');
+              history.push('/customers/dashboard');
             } else {
               setState({...state, messages: response.data.messages })
             }
@@ -73,7 +73,7 @@ function HotelLogin(props) {
                         onClick={handleSubmit}
                     > Login
                     </button>
-                    <Link to="/hotels/sign_up" > <button  className="btn btn-primary">signup</button></Link>
+                    <Link to="/customers/sign_up" > <button  className="btn btn-primary">signup</button></Link>
 
                 </form>
             </div>
@@ -81,4 +81,4 @@ function HotelLogin(props) {
     )
 }
 
-export default HotelLogin;
+export default CustomerLogin;

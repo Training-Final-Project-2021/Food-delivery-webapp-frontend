@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {Link, useHistory} from "react-router-dom";
 import axios from 'axios';
-function DeliveryRegistration(props) {
+function CustomerRegistration(props) {
     const history = useHistory();
     const [state, setState] = useState({
         email: "",
@@ -25,7 +25,7 @@ function DeliveryRegistration(props) {
     const handleSubmit = (event) => {
         event.preventDefault()
         const { email, password, password_confirmation, name, phone_no, address } = state
-        let delivery = {
+        let customer = {
           email: email,
           password: password,
           password_confirmation: password_confirmation,
@@ -34,12 +34,12 @@ function DeliveryRegistration(props) {
           address: address
         }
     
-        axios.post('http://localhost:3030/v1/deliveries/sign_up', { delivery })
+        axios.post('http://localhost:3030/v1/customers/sign_up', { customer })
           .then(response => {
             if (response.data.is_success) {
-                setState({...state, auth_token: response.data.delivery.authentication_token, messages: response.data.messages })
+                setState({...state, auth_token: response.data.customer.authentication_token, messages: response.data.messages })
               props.handleLogin(response.data)
-              history.push('/deliverys/dashboard');
+              history.push('/customers/dashboard');
             } else {
               setState({...state, messages: response.data.messages })
             }
@@ -128,7 +128,7 @@ function DeliveryRegistration(props) {
                     > Register
                     </button>
                     <p>Already a user?</p>
-                    <Link to="/deliverys/sign_in" > <button  className="btn btn-primary">sign In</button></Link>
+                    <Link to="/customers/sign_in" > <button  className="btn btn-primary">sign In</button></Link>
 
                 </form>
             </div>
@@ -136,4 +136,4 @@ function DeliveryRegistration(props) {
     )
 }
 
-export default DeliveryRegistration;
+export default CustomerRegistration;
