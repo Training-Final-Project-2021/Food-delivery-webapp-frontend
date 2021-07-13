@@ -32,6 +32,12 @@ function Main() {
                 <Route exact path='/customers/sign_in' component={() => <CustomerLogin handleLogin={handleLogin} />} />
                 <Route exact path='/customers/sign_up' component={() => <CustomerRegistration handleLogin={handleLogin} />} />
                 <Route exact path='/customers/dashboard' component={() => <CustomerDashboard customer={state} />} />
+                <Route exact path='/hotels/sign_in' component={() => <HotelLogin handleLogin={handleLogin} />} />
+                <Route exact path='/hotels/sign_up' component={() => <HotelRegistration handleLogin={handleLogin} />} />
+                <Route exact path='/hotels/dashboard' component={() => <HotelDashboard customer={state} />} />
+                <Route exact path='/deliveries/sign_in' component={() => <DeliveryLogin handleLogin={handleLogin} />} />
+                <Route exact path='/cdeliveries/sign_up' component={() => <DeliveryRegistration handleLogin={handleLogin} />} />
+                <Route exact path='/deliveries/dashboard' component={() => <DeliveryDashboard customer={state} />} />
             </Switch>
             <Footer />
         </div>
