@@ -1,27 +1,43 @@
-import React from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
+import RenderHotel from '../RenderHotel';
+
+//import axios from 'axios';
 
 function CustomerDashboard(props) {
-    
-    const renderHotels = () => {
 
+    const [ state, setState ] = useState({
+        hotel_id: "",
+        hotelClick: false,
+        itemClick: false
+    })
+
+    const handleHotelClick = () => {
+        setState({...state, hotelClick: !state.hotelClick})
     }
 
-    const renderMenu = (hotel_id) => {
+    // const handleItemClick = (value) => {
+    //     setState({...state, itemClick: value})
+    // }
 
-    }
+    // const setHotelId = (hotel_id) => {
+    //     setState({...state, hotel_id: hotel_id})
+    // }
 
-    const renderItem = (item_id) => {
+return (
+    <div>
+        <h1>{props.customer.messages}</h1>
+        <p>Logged in as: {props.customer.email}</p>
+        <p>Welcome: {props.customer.name}</p>
+        <button className="btn btn-primary" onClick={handleHotelClick}>Show Hotels</button>
+        {
+            state.hotelClick ?
+            <div>
+                <RenderHotel />
+            </div> : null
+        }
 
-    }
-
-    return (
-        <div>
-            <h1>{props.customer.messages}</h1>
-            <p>Welcome: {props.customer.name}</p>
-
-        </div>
-    )
+    </div>
+)
 }
 
 export default CustomerDashboard;

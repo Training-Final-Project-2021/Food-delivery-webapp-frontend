@@ -10,7 +10,7 @@ function Home(props) {
             </div>
             {
                 !props.login_status ?
-                <div className="container">
+                <div className="container" id="authentication">
                     <div className="row">
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5 text-white bg-dark rounded-3"> 
