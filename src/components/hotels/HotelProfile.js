@@ -20,7 +20,7 @@ function HotelProfile(props) {
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5  rounded-3 text-white bg-dark">
                                 <p>See all orders status</p>
-                                <Link to="/delivery/order_status">
+                                <Link to="/hotels/order_status">
                                     <button type="button" className="btn btn-primary">View</button>
                                 </Link>
                             </div>

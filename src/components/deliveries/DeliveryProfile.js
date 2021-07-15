@@ -5,7 +5,7 @@ import axios from 'axios';
 function DeliveryProfile(props) {
     const history = useHistory();
     const handleLogout = () => {
-        axios.delete('http://localhost:3030/v1/deliveries/sign_out', {headers: {"AUTH-TOKEN" :localStorage.getItem("auth_token")}})
+        axios.delete('http://localhost:3030/v1/deliveries/sign_out', {headers: {"AUTH-TOKEN" :localStorage.getItem("delivery_auth_token")}})
             .then(() => {
               props.handleLogout()
               history.push('/')
