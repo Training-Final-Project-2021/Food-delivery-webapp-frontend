@@ -9,7 +9,6 @@ function DeliveryRegistration(props) {
         password_confirmation: "",
         name: "",
         phone_no: "",
-        address: "",
         auth_token: "",
         messages: ""
     })
@@ -24,14 +23,14 @@ function DeliveryRegistration(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        const { email, password, password_confirmation, name, phone_no, address } = state
+        const { email, password, password_confirmation, name, phone_no} = state
         let delivery = {
           email: email,
           password: password,
           password_confirmation: password_confirmation,
           name: name,
-          phone_no: phone_no,
-          address: address
+          status: "Unverified",
+          phone_no: phone_no
         }
     
         axios.post('http://localhost:3030/v1/deliveries/sign_up', { delivery })
@@ -39,7 +38,7 @@ function DeliveryRegistration(props) {
             if (response.data.is_success) {
                 setState({...state, auth_token: response.data.delivery.authentication_token, messages: response.data.messages })
               props.handleLogin(response.data)
-              history.push('/deliverys/dashboard');
+              history.push('/deliveries/dashboard');
             } else {
               setState({...state, messages: response.data.messages })
             }
@@ -50,7 +49,7 @@ function DeliveryRegistration(props) {
 
     return (
         <div>
-            <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
+            <div className="card col-12 col-lg-4 offset-4 login-card mt-2 hv-center">
                 <form>
 
                     <div className="form-group text-left">
@@ -95,17 +94,6 @@ function DeliveryRegistration(props) {
                             name="password_confirmation"
                             placeholder="Password Confirmation"
                             value={state.password_confirmation}
-                            onChange={handleChange}
-                        />
-                    </div>
-
-                    <div className="form-group text-left">
-                        <label >Address</label>
-                        <input type="text"
-                            className="form-control"
-                            name="address"
-                            placeholder="Address"
-                            value={state.address}
                             onChange={handleChange}
                         />
                     </div>

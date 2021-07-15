@@ -11,6 +11,7 @@ function HotelRegistration(props) {
         phone_no: "",
         address: "",
         auth_token: "",
+        description: "",
         messages: ""
     })
 
@@ -24,13 +25,15 @@ function HotelRegistration(props) {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        const { email, password, password_confirmation, name, phone_no, address } = state
+        const { email, password, password_confirmation, name, phone_no, address, description } = state
         let hotel = {
           email: email,
           password: password,
           password_confirmation: password_confirmation,
           name: name,
+          status: "Unverified",
           phone_no: phone_no,
+          discription: description,
           address: address
         }
     
@@ -50,11 +53,11 @@ function HotelRegistration(props) {
 
     return (
         <div>
-            <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
+            <div className="card col-12 col-lg-4 offset-4 login-card mt-2 hv-center">
                 <form>
 
                     <div className="form-group text-left">
-                        <label>Your Name</label>
+                        <label>Hotel Name</label>
                         <input type="text"
                             className="form-control"
                             name="name"
@@ -106,6 +109,17 @@ function HotelRegistration(props) {
                             name="address"
                             placeholder="Address"
                             value={state.address}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+                    <div className="form-group text-left">
+                        <label >Description</label>
+                        <input type="text"
+                            className="form-control"
+                            name="description"
+                            placeholder="Description"
+                            value={state.description}
                             onChange={handleChange}
                         />
                     </div>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardFooter, CardHeader, CardImg, CardText, CardTitle } from 'reactstrap';
+import { Link, useHistory } from 'react-router-dom';
 
 function Cart() {
-
+    const history = useHistory();
     const [ state, setState ] = useState({
         carts: [],
         status: "",
@@ -31,9 +32,11 @@ function Cart() {
                 }
             })
             .catch(error => console.log('api errors:', error))
+            history.push('/customers/profile');
     }
 
     const RenderCart = () => {
+        if (state.carts){
         const items_list = state.carts.map((cart) => {
             return (
                 <div key={cart.id} className="col-12 col-md-3 m-1" >
@@ -50,8 +53,9 @@ function Cart() {
                 </div>
                 <button className="btn btn-primary offset-4" onClick={handleCartClick}>PLace Order!</button>
             </div>
-        )
-
+        )} else {
+            return <div></div>
+        }
     }
 
     const RenderItem = (cart) => {
@@ -74,6 +78,9 @@ function Cart() {
 
     return (
         <div>
+            <Link to="/customers/profile">
+                <button className="btn btn-primary">Back</button>
+            </Link>
             <h2>Your Cart</h2>
             {RenderCart()}
             <h2>message: {state.messages}</h2>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link, useHistory} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import axios from 'axios';
 function AdminLogin(props) {
     const history = useHistory();
@@ -43,39 +43,36 @@ function AdminLogin(props) {
 
     return (
         <div>
-            <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
-                <form>
-                    <div className="form-group text-left">
-                        <label htmlFor="exampleInputEmail1">Email address</label>
-                        <input type="email"
-                            className="form-control"
-                            name="email"
-                            aria-describedby="emailHelp"
-                            placeholder="Enter email"
-                            value={state.email}
-                            onChange={handleChange}
-                        />
-                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    <div className="form-group text-left">
-                        <label htmlFor="exampleInputPassword1">Password</label>
-                        <input type="password"
-                            className="form-control"
-                            name="password"
-                            placeholder="Password"
-                            value={state.password}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        onClick={handleSubmit}
-                    > Login
-                    </button>
-                    <Link to="/admins/sign_up" > <button  className="btn btn-primary">signup</button></Link>
-
-                </form>
+            <div className="card col-12 col-md-4 mt-2 mb-4 offset-4">
+                <h1 className="card-header bg-dark text-white">Admin Login</h1>
+                <div className="card-body">
+                    <form className="form">
+                        <div className="form-group text-left">
+                            <label>Email address</label>
+                            <input type="email"
+                                className="form-control mt-2"
+                                name="email"
+                                aria-describedby="emailHelp"
+                                placeholder="Enter email"
+                                value={state.email}
+                                onChange={handleChange}
+                            />
+                            <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div className="form-group text-left mt-2">
+                            <label>Password</label>
+                            <input type="password"
+                                className="form-control"
+                                name="password"
+                                placeholder="Password"
+                                value={state.password}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <br/>
+                        <button type="submit" className="btn btn-primary" onClick={handleSubmit} > Login </button>
+                    </form>
+                </div>
             </div>
         </div>
     )

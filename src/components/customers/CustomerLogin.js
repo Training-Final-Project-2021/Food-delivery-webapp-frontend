@@ -43,12 +43,14 @@ function CustomerLogin(props) {
 
     return (
         <div>
-            <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
-                <form>
+            <div className="card col-12 col-md-4 mt-2 offset-4">
+            <h1 className="card-header bg-dark text-white">Customer Login</h1>
+            <div className="card-body">
+                <form className="form">
                     <div className="form-group text-left">
                         <label htmlFor="exampleInputEmail1">Email address</label>
                         <input type="email"
-                            className="form-control"
+                            className="form-control mt-2"
                             name="email"
                             aria-describedby="emailHelp"
                             placeholder="Enter email"
@@ -60,22 +62,25 @@ function CustomerLogin(props) {
                     <div className="form-group text-left">
                         <label htmlFor="exampleInputPassword1">Password</label>
                         <input type="password"
-                            className="form-control"
+                            className="form-control mt-2"
                             name="password"
                             placeholder="Password"
                             value={state.password}
                             onChange={handleChange}
                         />
                     </div>
+                    <br/>
                     <button
                         type="submit"
                         className="btn btn-primary"
                         onClick={handleSubmit}
                     > Login
                     </button>
+                    
                     <Link to="/customers/sign_up" > <button  className="btn btn-primary">signup</button></Link>
 
                 </form>
+            </div>
             </div>
         </div>
     )

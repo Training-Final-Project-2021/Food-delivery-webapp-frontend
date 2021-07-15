@@ -41,7 +41,7 @@ function RenderMenu(props) {
             item_quantity: item_quantity,
             total_price: total_price
         }
-        axios.post('http://localhost:3030/v1/customers/add_to_cart', { cart }, {headers: {"AUTH-TOKEN" :localStorage.getItem("auth_token")}} )
+        axios.post('http://localhost:3030/v1/customers/add_to_cart', { cart }, {headers: {"AUTH-TOKEN" :localStorage.getItem("customer_auth_token")}} )
             .then(response => {
                 if (response.data.is_success) {
                     //console.log(response.data.hotels);
@@ -54,7 +54,7 @@ function RenderMenu(props) {
     const RenderMenu = () => {
         const items_list = state.items_list.map((item) => {
             return (
-                <div key={item.id} className="col-12 col-md-5 m-1" >
+                <div key={item.id} className="col-12 col-md-3 m-1" >
                     {RenderItem(item)}
                 </div>
             )
@@ -81,7 +81,7 @@ function RenderMenu(props) {
         return (
             <div>
                 <Card>
-                    <CardHeader className="card-bg-dark">
+                    <CardHeader className="text-white bg-dark">
                         <CardTitle className="text-white" >{item.name}</CardTitle>
                     </CardHeader>
                     <CardImg width="50%" src='https://recipes.timesofindia.com/thumb/msid-53109843,width-1600,height-900/53109843.jpg' alt={item.name} />

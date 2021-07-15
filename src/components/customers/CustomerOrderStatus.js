@@ -21,6 +21,19 @@ function CustomerOrderStatus() {
         // eslint-disable-next-line
     }, [])
 
+    const handleCancelOrder = (order_id) => {
+        const url = `http://localhost:3030/v1/customers/cancel_order?order_id=${order_id}`
+        axios.delete(url, { headers: { "AUTH-TOKEN": localStorage.getItem("customer_auth_token") } })
+        .then(response => {
+            console.log(response.data.orders);
+            if (response.data.is_success) {
+               // setState({ ...state, orders: response.data.orders })
+            }
+        })
+        .catch(error => console.log('api errors:', error)
+        )
+    }
+
     const ordersTable = () => {
         return (
             <div>
@@ -40,6 +53,7 @@ function CustomerOrderStatus() {
                                     <th>Total Price</th>
                                     <th>Order Status</th>
                                     <th>Order Date and Time</th>
+                                    <th>Cancel Orders</th>
                                 </tr>
                             </thead>
                     
@@ -83,6 +97,12 @@ function CustomerOrderStatus() {
                                             }
 
                                             <td>{order.created_at}</td>
+                                            {
+                                                order.status === "Pending" ?
+                                                <td>
+                                                    <button className="btn btn-danger" onClick={() => handleCancelOrder(order.id) }>Cancel</button>
+                                                </td> : null
+                                            }
                                         </tr>
                                     )
                                 })}

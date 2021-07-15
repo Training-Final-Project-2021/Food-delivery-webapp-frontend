@@ -42,12 +42,14 @@ function HotelLogin(props) {
 
     return (
         <div>
-            <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
+            <div className="card col-12 col-lg-4 offset-4 mt-2">
+                <h1 className="card-header bg-dark text-white">Hotel Login</h1>
+                <div className="card-body">
                 <form>
                     <div className="form-group text-left">
                         <label htmlFor="exampleInputEmail1">Email address</label>
                         <input type="email"
-                            className="form-control"
+                            className="form-control mt-2"
                             name="email"
                             aria-describedby="emailHelp"
                             placeholder="Enter email"
@@ -59,13 +61,14 @@ function HotelLogin(props) {
                     <div className="form-group text-left">
                         <label htmlFor="exampleInputPassword1">Password</label>
                         <input type="password"
-                            className="form-control"
+                            className="form-control mt-2"
                             name="password"
                             placeholder="Password"
                             value={state.password}
                             onChange={handleChange}
                         />
                     </div>
+                    <br/>
                     <button
                         type="submit"
                         className="btn btn-primary"
@@ -75,6 +78,7 @@ function HotelLogin(props) {
                     <Link to="/hotels/sign_up" > <button  className="btn btn-primary">signup</button></Link>
 
                 </form>
+            </div>
             </div>
         </div>
     )

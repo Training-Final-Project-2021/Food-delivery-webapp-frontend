@@ -39,7 +39,7 @@ function RenderHotel() {
         return (
             <div>
                 <Card>
-                    <CardHeader className="card-bg-dark">
+                    <CardHeader className="text-white bg-dark">
                         <CardTitle className="text-white" >{hotel.name}</CardTitle>
                     </CardHeader>
                     <CardImg width="20%" src='https://media-cdn.tripadvisor.com/media/photo-s/01/e9/31/4e/restaurant2.jpg' alt={hotel.name} />
@@ -58,7 +58,7 @@ function RenderHotel() {
     const HotelsList = () => {
         const hotels_list = state.hotels_list.map((hotel) => {
             return (
-                <div key={hotel.id} className="col-12 col-md-5 m-1" >
+                <div key={hotel.id} className="col-12 col-md-3 m-1" >
                     {RenderHotel(hotel)}
                 </div>
             )
