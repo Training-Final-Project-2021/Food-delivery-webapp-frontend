@@ -10,13 +10,144 @@ function Header(props) {
             setState(!isNavOpen)
           }
 
-        const handleClick = () => {
-            axios.delete('http://localhost:3030/v1/customers/sign_out', {headers: {"AUTH-TOKEN" :localStorage.getItem("auth_token")}})
+        const handleCustomerClick = () => {
+            axios.delete('http://localhost:3030/v1/customers/sign_out', {headers: {"AUTH-TOKEN" :localStorage.getItem("customer_auth_token")}})
             .then(() => {
-              props.handleLogout()
+              props.handleCustomerLogout()
               history.push('/')
             })
             .catch(error => console.log(error))
+        }
+
+        const handleAdminClick = () => {
+            axios.delete('http://localhost:3030/v1/admins/sign_out', {headers: {"AUTH-TOKEN" :localStorage.getItem("admin_auth_token")}})
+            .then(() => {
+              props.handleAdminLogout()
+              history.push('/')
+            })
+            .catch(error => console.log(error))
+        }
+
+        const handleHotelClick = () => {
+            axios.delete('http://localhost:3030/v1/hotels/sign_out', {headers: {"AUTH-TOKEN" :localStorage.getItem("hotel_auth_token")}})
+            .then(() => {
+              props.handleHotelLogout()
+              history.push('/')
+            })
+            .catch(error => console.log(error))
+        }
+
+        const handleDeliveryClick = () => {
+            axios.delete('http://localhost:3030/v1/deliveries/sign_out', {headers: {"AUTH-TOKEN" :localStorage.getItem("delivery_auth_token")}})
+            .then(() => {
+              props.handleDeliveryLogout()
+              history.push('/')
+            })
+            .catch(error => console.log(error))
+        }
+
+        const dashBoardFunctionality = () => {
+            if(props.login_status) {
+                let user_type = localStorage.getItem("user_type")
+                if (user_type === "customer") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/customers/dashboard'><span className="fa fa-shopping-basket fa-lg"></span> My Dashboard </NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "admin") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/admins/dashboard'><span className="fa fa-shopping-basket fa-lg"></span> My Dashboard </NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "hotel") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/hotels/dashboard'><span className="fa fa-shopping-basket fa-lg"></span> My Dashboard </NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "delivery") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/deliveries/dashboard'><span className="fa fa-shopping-basket fa-lg"></span> My Dashboard </NavLink>
+                        </NavItem>
+                    )
+                }
+            } else {
+                 return (
+                    <NavItem>
+                        <NavLink className="nav-link"  to='/'><span className="fa fa-home fa-lg"></span> Home</NavLink>
+                    </NavItem>
+                 );
+            }
+        }
+
+        const signOutFunctionality = () => {
+            if(props.login_status) {
+                let user_type = localStorage.getItem("user_type")
+                if (user_type === "customer") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/' onClick={handleCustomerClick} ><span className="fa fa-sign-out fa-lg"></span> Sign Out</NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "hotel") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/' onClick={handleHotelClick} ><span className="fa fa-sign-out fa-lg"></span> Sign Out</NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "admin") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/' onClick={handleAdminClick} ><span className="fa fa-sign-out fa-lg"></span> Sign Out</NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "delivery") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link"  to='/' onClick={handleDeliveryClick} ><span className="fa fa-sign-out fa-lg"></span> Sign Out</NavLink>
+                        </NavItem>
+                    )
+                }
+            } else {
+                 return null;
+            }
+        }
+
+        const profileFunctionality = () => {
+            if(props.login_status) {
+                let user_type = localStorage.getItem("user_type")
+                console.log("user-type = ", user_type);
+                if (user_type === "customer") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link" to="/customers/profile"><i className="fa fa-lg fa-user-circle" aria-hidden="true"></i></NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "hotel") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link" to="/hotels/profile"><i className="fa fa-lg fa-user-circle" aria-hidden="true"></i></NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "admin") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link" to="/admins/profile"><i className="fa fa-lg fa-user-circle" aria-hidden="true"></i></NavLink>
+                        </NavItem>
+                    )
+                } else if(user_type === "delivery") {
+                    return (
+                        <NavItem>
+                            <NavLink className="nav-link" to="/deliveries/profile"><i className="fa fa-lg fa-user-circle" aria-hidden="true"></i></NavLink>
+                        </NavItem>
+                    )
+                }
+            } else {
+                 return null;
+            }
         }
 
         return(
@@ -27,28 +158,11 @@ function Header(props) {
                         <NavbarBrand className="mr-auto" href="/"> Food For All</NavbarBrand>
                         <Collapse isOpen={isNavOpen} navbar>
                             <Nav navbar className="ms-auto">
-                                {
-                                    !props.login_status ?
-                                    <NavItem>
-                                        <NavLink className="nav-link"  to='/'><span className="fa fa-home fa-lg"></span> Home</NavLink>
-                                    </NavItem> : <NavItem>
-                                        <NavLink className="nav-link"  to='/customers/dashboard'><span className="fa fa-shopping-basket fa-lg"></span> My Dashboard </NavLink>
-                                    </NavItem>
-                                }
+                                { dashBoardFunctionality() }
                                 
-                                {
-                                    props.login_status ?
-                                        <NavItem>
-                                            <NavLink className="nav-link"  to='/' onClick={handleClick} ><span className="fa fa-sign-out fa-lg"></span> Sign Out</NavLink>
-                                    </NavItem> : null
-                                }
+                                { signOutFunctionality() }
                                 
-                                {
-                                    props.login_status ?
-                                        <NavItem>
-                                            <NavLink className="nav-link" to="/profile"><i className="fa fa-lg fa-user-circle" aria-hidden="true"></i></NavLink>
-                                        </NavItem> : null
-                                }
+                                { profileFunctionality() }
 
                             </Nav>
                         </Collapse>

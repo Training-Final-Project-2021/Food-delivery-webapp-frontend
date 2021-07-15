@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import RenderHotel from '../RenderHotel';
+import {Link} from 'react-router-dom';
 
 //import axios from 'axios';
 
@@ -28,6 +29,11 @@ return (
         <h1>{props.customer.messages}</h1>
         <p>Logged in as: {props.customer.email}</p>
         <p>Welcome: {props.customer.name}</p>
+        <p>Go to my profile &emsp;
+            <Link to="/customers/profile">
+                <button className="btn btn-secondary">Profile</button>
+            </Link>
+        </p>
         <button className="btn btn-primary" onClick={handleHotelClick}>Show Hotels</button>
         {
             state.hotelClick ?

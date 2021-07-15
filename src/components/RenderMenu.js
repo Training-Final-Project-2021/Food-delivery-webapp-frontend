@@ -7,12 +7,16 @@ function RenderMenu(props) {
     const [ state, setState ] = useState({
         items_list: [],
         hotel_id: props.hotel_id,
-        item_id: ""
+        item_id: "",
+        item_quantity: "",
+        item_name: "",
+        item_price: "",
+        rating: "",
+        messages: ""
     })
 
     useEffect(() => {
         const url = `http://localhost:3030/v1/hotels/show_menu?hotel_id=${state.hotel_id}`
-        console.log(url)
         axios.get(url)
             .then(response => {
                 if (response.data.is_success) {
@@ -25,9 +29,26 @@ function RenderMenu(props) {
             // eslint-disable-next-line
     }, [])
 
-    const handleItemClick = (item_id) => {
-        setState({...state, item_id: item_id})
-        
+    const handleItemClick = (itemId, itemName, itemPrice) => {
+        setState({...state, item_id: itemId, item_name: itemName, item_price:itemPrice })
+        const { hotel_id, item_quantity} = state
+        let total_price = parseInt(item_quantity) * parseInt(itemPrice);
+        let cart = {
+            item_id: itemId,
+            hotel_id: hotel_id,
+            item_name: itemName,
+            item_price: itemPrice,
+            item_quantity: item_quantity,
+            total_price: total_price
+        }
+        axios.post('http://localhost:3030/v1/customers/add_to_cart', { cart }, {headers: {"AUTH-TOKEN" :localStorage.getItem("auth_token")}} )
+            .then(response => {
+                if (response.data.is_success) {
+                    //console.log(response.data.hotels);
+                    setState({ ...state, messages: response.data.messages })
+                }
+            })
+            .catch(error => console.log('api errors:', error))
     }
 
     const RenderMenu = () => {
@@ -66,9 +87,23 @@ function RenderMenu(props) {
                     <CardImg width="50%" src='https://recipes.timesofindia.com/thumb/msid-53109843,width-1600,height-900/53109843.jpg' alt={item.name} />
                     <CardFooter className="card-footer">
                         <CardText>Dish Name: {item.name}</CardText>
+                        <CardText>Category: {item.category}</CardText>
+                        <CardText>Price: {item.price} Rs.</CardText>
                         <CardText>Description: {item.discription}</CardText>
                         <CardText>Rating: {item.rating}</CardText>
-                        <button className="btn btn-primary" value={item.id} onClick={()=>handleItemClick(item.id)}>Add to cart</button>
+                        <form>
+                            <div className="form-group text-left">
+                                <input type="text"
+                                    className="form-control"
+                                    name="item_quantity"
+                                    placeholder="Quantity (1-10)"
+                                    value={state.item_quantity}
+                                    onChange={(e) => setState({...state, item_quantity: e.target.value})}
+                                />
+                                <br/>
+                            </div>
+                        </form>
+                        <button className="btn btn-primary" value={item.id} onClick={()=>handleItemClick(item.id, item.name, item.price)}>Add to cart</button>
                     </CardFooter>
                 </Card>
             </div >
@@ -79,6 +114,7 @@ function RenderMenu(props) {
         <div>
             <h2>Menu for hotel id = {state.hotel_id}</h2>
             {RenderMenu()}
+            <h2>message: {state.messages}</h2>
         </div>
     )
 }

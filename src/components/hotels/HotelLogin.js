@@ -30,9 +30,8 @@ function HotelLogin(props) {
           .then(response => {
             if (response.data.is_success) {
                 setState({...state, auth_token: response.data.hotel.authentication_token, messages: response.data.messages })
-                //console.log(response.data.hotel.authentication_token,", auth-token = ", state.auth_token)
-              props.handleLogin(response.data)
-              history.push('/hotels/dashboard');
+                props.handleLogin(response.data);
+                history.push('/hotels/dashboard');
             } else {
               setState({...state, messages: response.data.messages })
             }
