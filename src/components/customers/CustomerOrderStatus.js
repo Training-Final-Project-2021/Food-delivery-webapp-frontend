@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-function OrderHistory() {
+function CustomerOrderStatus() {
     const [state, setState] = useState({
         orders: []
     })
 
     useEffect(() => {
-        axios.get('http://localhost:3030/v1/customers/view_order_history', { headers: { "AUTH-TOKEN": localStorage.getItem("customer_auth_token") } })
+        axios.get('http://localhost:3030/v1/customers/view_order_status', { headers: { "AUTH-TOKEN": localStorage.getItem("customer_auth_token") } })
             .then(response => {
                 //console.log(response.data.orders);
                 if (response.data.is_success) {
@@ -21,26 +21,12 @@ function OrderHistory() {
         // eslint-disable-next-line
     }, [])
 
-    const handleReorder = (order_id) => {
-        const url = `http://localhost:3030/v1/customers/reorder`
-        axios.put(url, { order_id }, { headers: { "AUTH-TOKEN": localStorage.getItem("customer_auth_token") } })
-            .then(response => {
-                //console.log(response.data.orders);
-                if (response.data.is_success) {
-                    //setState({ ...state, orders: response.data.orders })
-                }
-            })
-            .catch(error => console.log('api errors:', error)
-        )
-    }
-
-
     const ordersTable = () => {
         return (
             <div>
                 <br/>
                 <div className="card mx-5">
-                    <h3 className="card-header bg-dark text-white mx-2">Delivered Orders List</h3>
+                    <h3 className="card-header bg-dark text-white mx-2">Your Orders status</h3>
                     <div className="card-body">
                         <table className="table table-striped table-hover table-sm">
                             <thead>
@@ -54,7 +40,6 @@ function OrderHistory() {
                                     <th>Total Price</th>
                                     <th>Order Status</th>
                                     <th>Order Date and Time</th>
-                                    <th>Re-Order This</th>
                                 </tr>
                             </thead>
                     
@@ -69,9 +54,35 @@ function OrderHistory() {
                                             <td>{order.item_quantity}</td>
                                             <td>{order.item_price}</td>
                                             <td>{order.total_price}</td>
-                                            <td>{order.status}</td>
+                                             
+                                            {
+                                                order.status === "Pending" ?
+                                                    <td className="bg-info fw-bold">
+                                                        {order.status}
+                                                    </td> : 
+                                                    order.status === "Confirmed" ?
+                                                        <td className="bg-primary fw-bold">
+                                                            {order.status}
+                                                        </td> :
+                                                        order.status === "Ready" ?
+                                                            <td className="bg-secondary fw-bold">
+                                                                {order.status}
+                                                            </td> :
+                                                            order.status === "Delivered" ?
+                                                                <td className="bg-warning fw-bold">
+                                                                    {order.status}
+                                                                </td> :
+                                                                order.status === "Received" ?
+                                                                <td className="bg-success fw-bold">
+                                                                    {order.status}
+                                                                </td> : 
+                                                                <td className="bg-danger fw-bold">
+                                                                    {order.status}
+                                                                </td>
+                                                
+                                            }
+
                                             <td>{order.created_at}</td>
-                                            <td><button className="btn btn-warning" onClick={() => handleReorder(order.id) }>Re-order</button></td>
                                         </tr>
                                     )
                                 })}
@@ -94,4 +105,4 @@ function OrderHistory() {
     )
 }
 
-export default OrderHistory
+export default CustomerOrderStatus

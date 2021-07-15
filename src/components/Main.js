@@ -10,6 +10,8 @@ import CustomerRegistration from './customers/CustomerRegistrations'
 import CustomerDashboard from './customers/CustomerDashboard'
 import CustomerProfile from './customers/CustomerProfile'
 import Cart from './customers/Cart'
+import OrderHistory from './customers/OrderHistory'
+import CustomerOrderStatus from './customers/CustomerOrderStatus'
 
 import HotelLogin from './hotels/HotelLogin'
 import HotelRegistration from './hotels/HotelRegistrations'
@@ -18,6 +20,7 @@ import HotelProfile from './hotels/HotelProfile'
 import OrderAssign from './hotels/OrderAssign'
 import OrderConfirm from './hotels/OrderConfirm'
 import OrderStatus from './hotels/OrderStatus'
+import OrderConfirmation from './customers/OrderConfirmation'
 
 import DeliveryLogin from './deliveries/DeliveryLogin'
 import DeliveryRegistration from './deliveries/DeliveryRegistrations'
@@ -29,6 +32,8 @@ import Deliver from './deliveries/Deliver'
 import AdminLogin from './admins/AdminLogin'
 import AdminDashboard from './admins/AdminDashboard'
 import AdminProfile from './admins/AdminProfile'
+import VerifyHotels from './admins/VerifyHotels'
+import VerifyDeliveryPeople from './admins/VerifyDeliveryPeople'
 
 
 function Main() {
@@ -40,25 +45,25 @@ function Main() {
   })
 
   const handleCustomerLogin = (data) => {
-    setState({ ...state, login_status: data.logged_in, email: data.customer.email, name: data.customer.name, auth_token: data.customer.authentication_token, messages: data.messages })
+    setState({ ...state, login_status: true, email: data.customer.email, name: data.customer.name, messages: data.messages })
     localStorage.setItem('customer_auth_token', data.customer.authentication_token)
     localStorage.setItem('user_type', data.user_type)
   }
 
   const handleHotelLogin = (data) => {
-    setState({ ...state, login_status: data.logged_in, email: data.hotel.email, name: data.hotel.name, auth_token: data.hotel.authentication_token, messages: data.messages })
+    setState({ ...state, login_status: true, email: data.hotel.email, name: data.hotel.name, messages: data.messages })
     localStorage.setItem('hotel_auth_token', data.hotel.authentication_token)
     localStorage.setItem('user_type', data.user_type)
   }
 
   const handleDeliveryLogin = (data) => {
-    setState({ ...state, login_status: data.logged_in, email: data.delivery.email, name: data.delivery.name, auth_token: data.delivery.authentication_token, messages: data.messages })
+    setState({ ...state, login_status: true, email: data.delivery.email, name: data.delivery.name, messages: data.messages })
     localStorage.setItem('delivery_auth_token', data.delivery.authentication_token)
     localStorage.setItem('user_type', data.user_type)
   }
 
   const handleAdminLogin = (data) => {
-    setState({ ...state, login_status: data.logged_in, email: data.admin.email, name: data.admin.name, auth_token: data.admin.authentication_token, messages: data.messages })
+    setState({ ...state, login_status: true, email: data.admin.email, name: data.admin.name, messages: data.messages })
     localStorage.setItem('admin_auth_token', data.admin.authentication_token)
     localStorage.setItem('user_type', data.user_type)
   }
@@ -89,7 +94,7 @@ function Main() {
 
   useEffect(() => {
     const auto_login_admin = () => {
-      axios.get('http://localhost:3030/v1/admin/is_logged_in', { headers: { 'AUTH-TOKEN': localStorage.getItem("admin_auth_token") } })
+      axios.get('http://localhost:3030/v1/admins/is_logged_in', { headers: { 'AUTH-TOKEN': localStorage.getItem("admin_auth_token") } })
         .then(response => {
           if (response.data.is_success) {
             handleAdminLogin(response.data)
@@ -167,6 +172,8 @@ function Main() {
         <Route exact path='/admins/sign_in' component={() => <AdminLogin handleLogin={handleAdminLogin} />} />
         <Route exact path='/admins/dashboard' component={() => <AdminDashboard admin={state} />} />
         <Route exact path='/admins/profile' component={() => <AdminProfile handleLogout={handleAdminLogout} />} />
+        <Route exact path='/admins/verify_hotel' component={() => <VerifyHotels />} />
+        <Route exact path='/admins/verify_delivery_people' component={() => <VerifyDeliveryPeople />} />
 
 
         <Route exact path='/customers/sign_in' component={() => <CustomerLogin handleLogin={handleCustomerLogin} />} />
@@ -174,6 +181,9 @@ function Main() {
         <Route exact path='/customers/dashboard' component={() => <CustomerDashboard customer={state} />} />
         <Route exact path='/customers/profile' component={() => <CustomerProfile handleLogout={handleCustomerLogout} />} />
         <Route exact path='/customers/cart' component={() => <Cart />} />
+        <Route exact path='/customers/confirm_order' component={() => <OrderConfirmation />} />
+        <Route exact path='/customers/orders_history' component={() => <OrderHistory />} />
+        <Route exact path='/customers/orders_status' component={() => <CustomerOrderStatus />} />
 
 
         <Route exact path='/hotels/sign_in' component={() => <HotelLogin handleLogin={handleHotelLogin} />} />

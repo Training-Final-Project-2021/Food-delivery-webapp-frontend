@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 function AdminProfile(props) {
@@ -20,14 +20,19 @@ function AdminProfile(props) {
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5  rounded-3 text-white bg-dark">
                                 <p>Verify Hotels</p>
-                                <button type="button" className="btn btn-primary">View</button>
+                                <Link to="/admins/verify_hotel">
+                                    <button type="button" className="btn btn-primary">Verify</button>
+                                </Link>
+                                
                             </div>
                         </div>
 
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5  rounded-3 text-white bg-dark">
-                                <p>Verify delivery User</p>
-                                <button type="button" className="btn btn-primary">Deliver</button>
+                                <p>Verify Delivery People</p>
+                                <Link to="/admins/verify_delivery_people">
+                                    <button type="button" className="btn btn-primary">Verify</button>
+                                </Link>
                             </div>
                         </div>
 

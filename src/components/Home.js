@@ -14,7 +14,7 @@ function Home(props) {
                     <div className="row">
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5 text-white bg-dark rounded-3"> 
-                                <p>Want to order food?<br/>Sign in here!</p>
+                                <p>For Customers<br/>Sign in here!</p>
                                 <Link to="/customers/sign_in">
                                     <button type="button" className="btn btn-primary">Sign In</button>
                                 </Link>
@@ -28,7 +28,7 @@ function Home(props) {
                         </div>
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5  rounded-3 text-white bg-dark">
-                                <p>Want to add your hotel?<br/>Sign in here!</p>
+                                <p>For Hotels<br/>Sign in here!</p>
                                 <Link to="/hotels/sign_in">
                                     <button type="button" className="btn btn-primary">Sign In</button>
                                 </Link>
@@ -41,7 +41,7 @@ function Home(props) {
                         </div>
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5 rounded-3 text-white bg-dark">
-                                <p>Want to deliver food?<br/>Sign in here!</p>
+                                <p>For Deliveries<br/>Sign in here!</p>
                                 <Link to="/deliveries/sign_in">
                                     <button type="button" className="btn btn-primary">Sign In</button>
                                 </Link>

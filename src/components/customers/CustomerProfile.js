@@ -33,13 +33,22 @@ function CustomerProfile(props) {
                         <div className="col-12 col-md-4">
                             <div className="h-80 p-4 m-5  rounded-3 text-white bg-dark">
                                 <p>See your order status</p>
-                                <Link to="/customers/order_status">
+                                <Link to="/customers/orders_status">
                                     <button type="button" className="btn btn-primary">View</button>
                                 </Link>
                                 <br/><br/>
                                 <p>Your order history</p>
-                                <Link to="/customers/order_history">
+                                <Link to="/customers/orders_history">
                                     <button type="button" className="btn btn-primary">History</button>
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="col-12 col-md-4">
+                            <div className="h-80 p-4 m-5  rounded-3 text-white bg-dark">
+                                <p>Please Confirm your delivery status</p>
+                                <Link to="/customers/confirm_order">
+                                    <button type="button" className="btn btn-primary">Confirm</button>
                                 </Link>
                             </div>
                         </div>

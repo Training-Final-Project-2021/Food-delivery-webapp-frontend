@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-function OrderHistory() {
+function OrderConfirmation() {
     const [state, setState] = useState({
         orders: []
     })
 
     useEffect(() => {
-        axios.get('http://localhost:3030/v1/customers/view_order_history', { headers: { "AUTH-TOKEN": localStorage.getItem("customer_auth_token") } })
+        axios.get('http://localhost:3030/v1/customers/fetch_delivered_orders', { headers: { "AUTH-TOKEN": localStorage.getItem("customer_auth_token") } })
             .then(response => {
                 //console.log(response.data.orders);
                 if (response.data.is_success) {
@@ -21,8 +21,8 @@ function OrderHistory() {
         // eslint-disable-next-line
     }, [])
 
-    const handleReorder = (order_id) => {
-        const url = `http://localhost:3030/v1/customers/reorder`
+    const handleConfirmation = (order_id) => {
+        const url = `http://localhost:3030/v1/customers/confirm_delivery`
         axios.put(url, { order_id }, { headers: { "AUTH-TOKEN": localStorage.getItem("customer_auth_token") } })
             .then(response => {
                 //console.log(response.data.orders);
@@ -46,6 +46,7 @@ function OrderHistory() {
                             <thead>
                                 <tr>
                                     <th>Order Id</th>
+                                    <th>Customer Id</th>
                                     <th>Hotel Id</th>
                                     <th>Item Id</th>
                                     <th>Item Name</th>
@@ -54,7 +55,7 @@ function OrderHistory() {
                                     <th>Total Price</th>
                                     <th>Order Status</th>
                                     <th>Order Date and Time</th>
-                                    <th>Re-Order This</th>
+                                    <th>Confirm Received</th>
                                 </tr>
                             </thead>
                     
@@ -63,6 +64,7 @@ function OrderHistory() {
                                     return (
                                         <tr key={order.id}>
                                             <td>{order.id}</td>
+                                            <td>{order.customer_id}</td>
                                             <td>{order.hotel_id}</td>
                                             <td>{order.item_id}</td>
                                             <td>{order.item_name}</td>
@@ -71,7 +73,7 @@ function OrderHistory() {
                                             <td>{order.total_price}</td>
                                             <td>{order.status}</td>
                                             <td>{order.created_at}</td>
-                                            <td><button className="btn btn-warning" onClick={() => handleReorder(order.id) }>Re-order</button></td>
+                                            <td><button className="btn btn-warning" onClick={()=> handleConfirmation(order.id)}>Received</button></td>
                                         </tr>
                                     )
                                 })}
@@ -94,4 +96,4 @@ function OrderHistory() {
     )
 }
 
-export default OrderHistory
+export default OrderConfirmation
